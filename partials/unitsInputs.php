@@ -16,10 +16,10 @@
     <?php $allSlots = ['Item0', 'Item1', 'Item2', 'Item3', 'Head', 'Body', 'Gloves', 'Leg', 'Cape']; ?>
     <?php foreach ($allSlots as $slot): ?>
         <?php
-        // Check if this slot exists in the unit's equipment
+
         $items = $unit->equipment[$slot] ?? [];
         $options = $optionCache[$category] ?? [];
-        // Now render the input
+
         ?>
         <div>
             <h3><?php echo $slot; ?></h3>
@@ -28,7 +28,7 @@
                     <input type="text" name="equipment[<?php echo $slot; ?>][]" value="<?php echo htmlspecialchars($item); ?>">
                 <?php endforeach; ?>
             <?php else: ?>
-                <!-- Render empty input(s) if slot is missing or has no items -->
+
                 <input type="text" name="equipment[<?php echo $slot; ?>][]" value="">
             <?php endif; ?>
         </div>
