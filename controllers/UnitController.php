@@ -31,6 +31,7 @@ class UnitController
         foreach ($data as $unit) {
             $unit = Unit::fromArray($unit);
             $units[] =  $unit;
+            // echo $unit->culture;
             // $unit->getEquipment();
         }
         return $units;
@@ -72,6 +73,12 @@ class UnitController
         $slotCategoryMap = $this->getSlotCategoryMap();
         $optionCache = $this->buildOptionCache($slotCategoryMap);
         $units = $this->prepareUnits();
+
+        $unitsByCulture = [];
+        foreach ($units as $unit) {
+            $unitsByCulture[$unit->culture][] = $unit;
+        }
+
         require '../views/index.php';
     }
 }

@@ -3,17 +3,25 @@
 class Unit
 {
     public string $id;
+    public string $culture;
     public array $skills;
     public array $equipment;
     public static function fromArray(array $data): self
     {
         $unit = new self;
         $unit->id = $data['@attributes']['id'] ?? '';
+        $unit->culture = ucfirst(explode('_', str_replace('Culture.', '', $data['@attributes']['culture'] ?? ''))[0]);
+        // $unit->culture = str_replace('Culture.', '', $data['@attributes']['culture'] ?? '');
         $unit->skills = $data['skills'] ?? [];
         $unit->equipment = $data['Equipments'] ?? [];
         $unit->equipment = $unit->getNormalizedEquipment();
 
         return $unit;
+    }
+    public function getCulture()
+    {
+
+        echo $this->culture;
     }
     public function getSkillValues()
     {
