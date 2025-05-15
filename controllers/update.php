@@ -6,89 +6,52 @@ function dd($data)
     echo '</pre>';
 }
 
+require_once __DIR__ . '/../controllers/UnitController.php';
+require_once __DIR__ . '/../controllers/SlotController.php';
+require_once __DIR__ . '/../controllers/UpdateController.php';
+require_once __DIR__ . '/../controllers/PayloadValidator.php';
+// require_once __DIR__ . '/../src/optionCache.php'; 
 
 $xmlPath = __DIR__ . '/../assets/spnpccharacters.xml';
 $xmlContent = file_get_contents($xmlPath);
 $xml = simplexml_load_string($xmlContent);
+if ($xml === false) {
+    http_response_code(500);
+    exit("Failed to load XML file.");
+}
+$optionCache = new SlotController()->getOptionCache();
 
+// dd($optionCache);
+// Get allowed items from the datalist cache
+$allowedItems = array_merge(...array_values($optionCache));
+// dd($allowedItems);
+$validator = new PayloadValidator($allowedItems);
 
 $json = $_POST['payload'] ?? '';
-$data = json_decode($json, true);
-
-// dd($data);
-if (!is_array($data)) {
+// dd($_POST['payload']);
+if (!$json) {
     http_response_code(400);
-    exit('Invalid payload.');
+    exit("No payload submitted.");
+}
+try {
+    $validatedData = $validator->validate($json);
+    // dd($validatedData);
+} catch (Exception $e) {
+    http_response_code(400);
+    exit($e->getMessage());
 }
 
-foreach ($data as $unitId => $unitData) {
 
-    foreach ($xml->NPCCharacter as $character) {
-        $attributes = $character->attributes();
-        if ((string)$attributes['id'] !== $unitId) continue;
-
-        // === Update skills ===
-        if (isset($unitData['skills'])) {
-            // Removing old skills
-            unset($character->skills);
-            $skillsNode = $character->addChild('skills');
-            foreach ($unitData['skills'] as $skillId => $value) {
-                $skill = $skillsNode->addChild('skill');
-                $skill->addAttribute('id', $skillId);
-                $skill->addAttribute('value', $value);
-            }
-        }
-
-        // === Update equipment ===
-        if (isset($unitData['equipment'])) {
-            $equipmentUpdates = $unitData['equipment'];
-            $equipmentsNode = $character->Equipments;
-
-            if ($equipmentsNode) {
-                $rosterIndex = 0;
-                foreach ($equipmentsNode->EquipmentRoster as $roster) {
-                    foreach ($equipmentUpdates as $slot => $items) {
-                        foreach ($items as $index => $itemId) {
-
-                            if ((int)$index !== $rosterIndex) continue;
-
-                            // finding existing equipment with same slot
-                            $found = false;
-                            foreach ($roster->equipment as $equipment) {
-                                if ((string)$equipment['slot'] === $slot) {
-                                    $equipment['id'] = $itemId;
-                                    $found = true;
-                                    break;
-                                }
-                            }
-
-
-                            if (!$found && $itemId) {
-                                $new = $roster->addChild('equipment');
-                                $new->addAttribute('slot', $slot);
-                                $new->addAttribute('id', $itemId);
-                            }
-                        }
-                    }
-                    $rosterIndex++;
-                }
-            }
-        }
-
-        break;
-    }
-}
+$updateController = new UpdateController($xml);
+$updateController->readAndUpdate($validatedData);
 
 
 $tempFile = tempnam(sys_get_temp_dir(), 'npc_') . '.xml';
-$xml->asXML($tempFile);
-
+$updateController->getXml()->asXML($tempFile);
 
 header('Content-Type: application/xml');
 header('Content-Disposition: attachment; filename="updated_npccharacters.xml"');
 header('Content-Length: ' . filesize($tempFile));
 readfile($tempFile);
-
-// Clean up
 unlink($tempFile);
 exit;

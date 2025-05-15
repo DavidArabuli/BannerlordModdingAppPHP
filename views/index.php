@@ -69,7 +69,7 @@
                                                 <h4 class="itemSlot"><?= htmlspecialchars($slot) ?> :</h4>
                                                 <?php foreach ($items as $index => $item): ?>
                                                     <input
-                                                        class='inputBlock'
+
                                                         list="<?= htmlspecialchars($category) ?>_options"
                                                         class="equipment-input"
                                                         data-unit-id="<?= htmlspecialchars($unit->id) ?>"
