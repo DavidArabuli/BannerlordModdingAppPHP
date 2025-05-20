@@ -133,8 +133,8 @@
     transition: var(--transition);
     text-transform: capitalize;
     display: inline-block;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
   }
   .btn:hover {
     background: var(--primary-700);
@@ -143,6 +143,8 @@
   .btn-hipster {
     color: var(--primary-500);
     background: var(--primary-200);
+    margin-top: 1rem;
+    margin-bottom: 1rem;
   }
   .btn-hipster:hover {
     color: var(--primary-200);
@@ -212,6 +214,10 @@
   }
   
   /* Modding Tool CSS */
+  nav {
+    background-color: var(--grey-200);
+    height: 10rem;
+  }
   h4,
   h5 {
     margin-top: 1rem;
@@ -231,7 +237,11 @@
     align-content: center;
     margin-bottom: 1rem;
   }
-  
+  .form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
   .allItems {
     border: 3px dotted orange;
     /* display: none; */
@@ -248,6 +258,7 @@
         justify-content:center; */
   }
   .cultureX {
+    
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -256,20 +267,22 @@
     border: 5px solid blue;
     gap: 2rem;
 }
-
+.details {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
   
   .summary{
     cursor: pointer;
-    border: 1px solid gray;
-    max-width: 15rem;
+    min-width: 20rem;
   }
   .summary:hover{
-    background: var(--primary-300);
     box-shadow: var(--shadow-3);
-    transform: scaleX(1.1);
   }
   
-  
+
   .inputBlock {
     display: flex;
     justify-content: space-between;
@@ -324,7 +337,39 @@
   .inputBlock input {
     width: 4rem;
   }
+  .skill-input:hover{
+    transform: scale(1.05);
+    background-color: var(--primary-100);
+  }
   
+  .equipment-input:hover{
+    cursor: pointer;
+    background-color: var(--primary-100);
+  }
+  
+  .input-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.clear-btn {
+    position: absolute;
+    right: -1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    color: #888;
+    cursor: pointer;
+    font-size: 16px;
+    line-height: 1;
+    padding: 0;
+    color: red;
+}
+
+.clear-btn:hover {
+    color: rgb(83, 6, 6);
+}
 
   
   footer {

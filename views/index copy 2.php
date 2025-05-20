@@ -105,55 +105,26 @@
         }
     </script>
     <script>
-        document.querySelector('form').addEventListener('click', (event) => {
-            if (event.target.classList.contains('clear-btn')) {
-                const input = event.target.previousElementSibling;
-                if (input && input.tagName.toLowerCase() === 'input') {
-                    input.value = '';
-                    input.dataset.cleared = 'true';
-                    input.focus();
-                }
-            }
-        });
-    </script>
-    <script>
         document.querySelectorAll('.equipment-input').forEach(input => {
-            const datalistId = input.getAttribute('list');
-            const list = document.getElementById(datalistId);
-            const options = Array.from(list.options);
-            const original = input.dataset.original;
 
-
-            input.addEventListener('blur', () => {
-                if (input.dataset.cleared === 'true') {
-                    delete input.dataset.cleared;
-                    return;
-                }
-
-                const isValid = options.some(option => option.value === input.value);
-                if (!isValid) {
-                    input.value = original;
-                }
+            input.addEventListener('focus', () => {
+                const currentValue = input.value;
+                input.value = '';
+                setTimeout(() => {
+                    input.value = currentValue;
+                }, 1);
             });
 
 
-            input.addEventListener('mousedown', (e) => {
-                if (document.activeElement === input) {
-                    e.preventDefault();
+            input.addEventListener('blur', () => {
+                const original = input.dataset.original;
+                const datalistId = input.getAttribute('list');
+                const list = document.getElementById(datalistId);
 
-
-                    const val = input.value;
-                    input.value = '';
-                    setTimeout(() => {
-                        input.value = val;
-                    }, 1);
-                } else {
-
-                    input.focus();
+                const isValid = Array.from(list.options).some(option => option.value === input.value);
+                if (!isValid) {
+                    input.value = original;
                 }
-
-
-
             });
         });
     </script>
