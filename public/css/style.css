@@ -295,6 +295,18 @@
   flex-direction: column;
   align-items: center;
 }
+.details-intro {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 50rem;
+}
+.intro{
+  max-width: 70rem;
+  margin: 0 auto;
+  padding: 0.5rem;
+}
   
   .summary{
     cursor: pointer;

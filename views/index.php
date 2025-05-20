@@ -14,73 +14,76 @@
             <h3>Mount and Blade Bannerlord modding tools</h3>
         </div>
     </nav>
-    <details class="details" closed>
+    <article class="intro">
 
-        <summary class="summary btn"><strong>read more
-            </strong></summary>
-        <div class="instruction">
-            <p>Using Bannerlord modding tools is extremely easy</p>
-            <br />
+        <details class="details" closed>
 
-            <p>1) Navigate to the unit you want to edit.</p>
 
-            <br />
-
-            <p>2) Enter desired values in a skill box (from 0 to 999)</p>
-            <br />
-
-            <p>
-                3) If you wish to add or replace items - choose equipment roster (some
-                units only have one roster), choose a slot appropriate to your desired
-                item type, and choose new item from a dropdown menu. Proceed to
-                another slot, next equipment roster or to another unit.
-            </p>
-            <br />
-
-            <p>
-                4) When you are happy with your choices - click "submit and download
-                XML" button.
-            </p>
-            <br />
-
-            <p>
-                5) This will download an XML file, named "spnpccharacters.xml", on
-                your computer.
-            </p>
-            <br />
-
-            <p>
-                6) Navigate to \Mount & Blade II Bannerlord\ Modules\SandBoxCore\
-                ModuleData, and replace existing "spnpccharacters.xml" file with file
-                produced by this app. I suggest backing up your original file, so that
-                you can revert your changes.
-            </p>
-            <br />
-            <br />
-        </div>
-        <div class="instruction">
-            <h3 class="infoTitle">Things to know:</h3>
-            <br />
-            <p>
-                - The file you get is fully compatible with original vanilla
-                Bannerlord.
+            <summary class="summary btn"><strong>read more
+                </strong></summary>
+            <div class="instruction">
+                <p>Using Bannerlord modding tools is extremely easy</p>
                 <br />
-                - It was not tested with mods that heavily modify your original game
-                files.
-                <br />
-                - It should work in most scenarios, unless you have directly removed
-                some of the items or units, or changed id-s that are used in
-                "spnpccharacters.xml".
-                <br />
-                - Item0,1,2,3 - are slots for weapons and shields.
-                <br />
-                - All other have self-explaining names.
-            </p>
-        </div>
-        <br />
 
-    </details>
+                <p>1) Navigate to the unit you want to edit.</p>
 
+                <br />
+
+                <p>2) Enter desired values in a skill box (from 0 to 999)</p>
+                <br />
+
+                <p>
+                    3) If you wish to add or replace items - choose equipment roster (some
+                    units only have one roster), choose a slot appropriate to your desired
+                    item type, and choose new item from a dropdown menu. Proceed to
+                    another slot, next equipment roster or to another unit.
+                </p>
+                <br />
+
+                <p>
+                    4) When you are happy with your choices - click "submit and download
+                    XML" button.
+                </p>
+                <br />
+
+                <p>
+                    5) This will download an XML file, named "spnpccharacters.xml", on
+                    your computer.
+                </p>
+                <br />
+
+                <p>
+                    6) Navigate to \Mount & Blade II Bannerlord\ Modules\SandBoxCore\
+                    ModuleData, and replace existing "spnpccharacters.xml" file with file
+                    produced by this app. I suggest backing up your original file, so that
+                    you can revert your changes.
+                </p>
+                <br />
+                <br />
+            </div>
+            <div class="instruction">
+                <h3 class="infoTitle">Things to know:</h3>
+                <br />
+                <p>
+                    - The file you get is fully compatible with original vanilla
+                    Bannerlord.
+                    <br />
+                    - It was not tested with mods that heavily modify your original game
+                    files.
+                    <br />
+                    - It should work in most scenarios, unless you have directly removed
+                    some of the items or units, or changed id-s that are used in
+                    "spnpccharacters.xml".
+                    <br />
+                    - Item0,1,2,3 - are slots for weapons and shields.
+                    <br />
+                    - All other have self-explaining names.
+                </p>
+            </div>
+            <br />
+
+        </details>
+    </article>
     <?php foreach ($optionCache as $category => $options): ?>
         <datalist id="<?= htmlspecialchars($category) ?>_options">
             <?php foreach ($options as $option): ?>
