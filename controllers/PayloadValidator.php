@@ -1,6 +1,8 @@
 <?php
 class PayloadValidator
 {
+    public array $errors = [];
+
     private array $allowedItemsByCategory;
     private array $slotToCategoryMap = [
         'Item0' => 'weapons',
@@ -22,6 +24,7 @@ class PayloadValidator
 
     public function validate(string $json): array
     {
+        $this->errors = [];
         if (strlen($json) > $this->maxPayloadSize) {
             throw new Exception("Payload too large.");
         }
@@ -36,7 +39,8 @@ class PayloadValidator
             if (isset($unitData['skills'])) {
                 foreach ($unitData['skills'] as $skillId => $value) {
                     if (!ctype_digit((string)$value) || $value < 0 || $value > 999) {
-                        throw new Exception("Skill value for '$skillId' must be an integer between 0 and 999.");
+                        // throw new Exception("Skill value for '$skillId' must be an integer between 0 and 999.");
+                        $this->errors["skills.$unitId.$skillId"] = "Skill '$skillId' must be an integer between 0 and 999.";
                     }
                 }
             }
@@ -54,13 +58,16 @@ class PayloadValidator
                     foreach ($items as $index => $itemName) {
                         if ($itemName === '') continue;
                         if (!in_array($itemName, $allowed, true)) {
-                            throw new Exception("Item '$itemName' is not allowed in slot '$slot'.");
+                            $this->errors["equipment.$unitId.$slot.$index"] = "Item '$itemName' is not allowed in slot '$slot'.";
                         }
                     }
                 }
             }
         }
-
+        // todo
+        if (!empty($this->errors)) {
+            return [];
+        }
         return $data;
     }
 }

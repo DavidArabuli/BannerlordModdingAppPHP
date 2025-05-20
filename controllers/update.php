@@ -11,6 +11,7 @@ require_once __DIR__ . '/../controllers/SlotController.php';
 require_once __DIR__ . '/../controllers/UpdateController.php';
 require_once __DIR__ . '/../controllers/PayloadValidator.php';
 // require_once __DIR__ . '/../src/optionCache.php'; 
+session_start();
 
 $xmlPath = __DIR__ . '/../assets/spnpccharacters.xml';
 $xmlContent = file_get_contents($xmlPath);
@@ -38,8 +39,16 @@ try {
     $validatedData = $validator->validate($json);
     // dd($validatedData);
 } catch (Exception $e) {
-    http_response_code(400);
-    exit($e->getMessage());
+    $_SESSION['errors'] = ['global' => $e->getMessage()];
+    $_SESSION['old'] = $_POST;
+    header("Location: /index.php");
+    exit;
+}
+if (!empty($validator->errors)) {
+    $_SESSION['errors'] = $validator->errors;
+    $_SESSION['old'] = $_POST;
+    header("Location: /");
+    exit;
 }
 
 

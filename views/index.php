@@ -1,3 +1,9 @@
+<?php
+session_start();
+$errors = $_SESSION['errors'] ?? [];
+$old = $_SESSION['old'] ?? [];
+unset($_SESSION['errors'], $_SESSION['old']);
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -97,7 +103,16 @@
     <?php endforeach; ?>
 
     <h1>Unit Editor</h1>
-
+    <?php if (!empty($errors)): ?>
+        <div class="form-errors">
+            <ul>
+                <h3>There are some errors in your form submission!</h3>
+                <?php foreach ($errors as $key => $message): ?>
+                    <li><?= htmlspecialchars($message) ?></li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+    <?php endif; ?>
     <form class="form" method="POST" action="/update-units" onsubmit="preparePayload(event)">
         <button class="btn btn-hipster" type="submit">Submit changes and download XML</button>
         <input type="hidden" name="payload" id="payload">
@@ -141,6 +156,7 @@
 
 
     </form>
+
 
     <script>
         function preparePayload(event) {
