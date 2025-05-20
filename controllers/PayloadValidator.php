@@ -25,8 +25,8 @@ class PayloadValidator
             // Skills
             if (isset($unitData['skills'])) {
                 foreach ($unitData['skills'] as $skillId => $value) {
-                    if (!is_numeric($value)) {
-                        throw new Exception("Skill value for '$skillId' must be numeric.");
+                    if (!is_numeric($value) || $value < 0 || $value > 999) {
+                        throw new Exception("Skill value for '$skillId' must be a number between 0 and 999.");
                     }
                 }
             }

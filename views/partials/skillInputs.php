@@ -5,6 +5,7 @@
             <input
                 type="text"
                 class="skill-input"
+                required
                 data-unit-id="<?= htmlspecialchars($unit->id) ?>"
                 data-skill-id="<?= htmlspecialchars($skill['id']) ?>"
                 value="<?= htmlspecialchars($skill['value'], ENT_QUOTES) ?>">
