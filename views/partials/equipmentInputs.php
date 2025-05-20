@@ -1,5 +1,5 @@
 <details class="allItems">
-    <summary class="summary"><strong>change unit`s equipment
+    <summary class="summary btn-equipment"><strong>change equipment
         </strong></summary>
     <?php
     $allSlots = ['Item0', 'Item1', 'Item2', 'Item3', 'Head', 'Body', 'Gloves', 'Leg', 'Cape'];
