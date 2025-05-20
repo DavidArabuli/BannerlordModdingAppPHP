@@ -22,10 +22,11 @@ if ($xml === false) {
 $optionCache = new SlotController()->getOptionCache();
 
 // dd($optionCache);
-// Get allowed items from the datalist cache
+
 $allowedItems = array_merge(...array_values($optionCache));
 // dd($allowedItems);
-$validator = new PayloadValidator($allowedItems);
+// dd($optionCache);
+$validator = new PayloadValidator($optionCache);
 
 $json = $_POST['payload'] ?? '';
 // dd($_POST['payload']);

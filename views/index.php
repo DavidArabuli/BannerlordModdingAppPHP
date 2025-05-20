@@ -84,10 +84,14 @@
 
         </details>
     </article>
+
+
+
     <?php foreach ($optionCache as $category => $options): ?>
         <datalist id="<?= htmlspecialchars($category) ?>_options">
             <?php foreach ($options as $option): ?>
-                <option value="<?= htmlspecialchars($option, ENT_QUOTES) ?>"></option>
+                <!-- removing "Item." prefix to make it more user friendly and easier on the eyes -->
+                <option value="<?= htmlspecialchars(preg_replace('/^Item\./', '', $option)) ?>"></option>
             <?php endforeach; ?>
         </datalist>
     <?php endforeach; ?>
@@ -159,14 +163,17 @@
                 const unitId = input.dataset.unitId;
                 const slot = input.dataset.slot;
                 const index = input.dataset.index;
-                const value = input.value;
+                // this converts user friendly format into one that is used by game XML
+                const rawValue = input.value.trim();
+                const fullValue = rawValue ? `Item.${rawValue.replace(/^Item\./, '')}` : '';
 
                 if (!payload[unitId]) payload[unitId] = {
                     skills: {},
                     equipment: {}
                 };
                 if (!payload[unitId].equipment[slot]) payload[unitId].equipment[slot] = [];
-                payload[unitId].equipment[slot][index] = value;
+
+                payload[unitId].equipment[slot][index] = fullValue;
             });
 
             document.getElementById('payload').value = JSON.stringify(payload);

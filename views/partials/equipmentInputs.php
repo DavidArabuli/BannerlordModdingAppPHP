@@ -11,16 +11,19 @@
             <h4 class="itemSlot"><?= htmlspecialchars($slot) ?> :</h4>
             <?php foreach ($items as $index => $item): ?>
                 <div class="input-wrapper">
+                    <!-- below we are removing "Item." prefix to make it more user friendly and easier on the eyes -->
                     <input
                         list="<?= htmlspecialchars($category) ?>_options"
                         class="equipment-input"
                         data-unit-id="<?= htmlspecialchars($unit->id) ?>"
                         data-slot="<?= htmlspecialchars($slot) ?>"
                         data-index="<?= htmlspecialchars($index) ?>"
-                        value="<?= htmlspecialchars($item, ENT_QUOTES) ?>"
-                        data-original="<?= htmlspecialchars($item, ENT_QUOTES) ?>"
+                        value="<?= htmlspecialchars(preg_replace('/^Item\./', '', $item), ENT_QUOTES) ?>"
+                        data-original="<?= htmlspecialchars(preg_replace('/^Item\./', '', $item), ENT_QUOTES) ?>"
                         placeholder="-- Select --"
                         autocomplete="off">
+
+
                     <button type="button" class="clear-btn" title="Clear">&times;</button>
                 </div>
 
